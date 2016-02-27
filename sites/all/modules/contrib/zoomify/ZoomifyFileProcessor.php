@@ -57,10 +57,10 @@ function rm($fileglob) {
   return true;
 }
 
-function imageCrop($image, $left, $upper, $right, $lower) {
+function ZoomifyImageCrop($image, $left, $upper, $right, $lower) {
   $x = imagesx($image);
   $y = imagesy($image);
-  # if ($this->_debug) print "imageCrop x=$x y=$y left=$left upper=$upper right=$right lower=$lower<br>\n";
+  # if ($this->_debug) print "ZoomifyImageCrop x=$x y=$y left=$left upper=$upper right=$right lower=$lower<br>\n";
   $w = abs($right -$left);
   $h = abs($lower -$upper);
   $crop = imagecreatetruecolor($w, $h);
@@ -304,7 +304,7 @@ class ZoomifyFileProcessor {
         if ($this->_debug) {
           print "line 241 calling crop rowHeight=$rowHeight tileHeight=$tileHeight<br>";
         }
-        $imageRow = imageCrop($imageRow, 0, 0, $tierWidth, $firstRowHeight + $secondRowHeight);
+        $imageRow = ZoomifyImageCrop($imageRow, 0, 0, $tierWidth, $firstRowHeight + $secondRowHeight);
         #        imageRow = imageRow.crop((0, 0, tierWidth, (firstRowHeight+secondRowHeight)))
       }
     }
@@ -341,7 +341,7 @@ class ZoomifyFileProcessor {
         if ($this->_debug) {
           print "line 248 calling crop<br>";
         }
-        $this->saveTile(imageCrop($imageRow, $ul_x, $ul_y, $lr_x, $lr_y), $tier, $column, $row);
+        $this->saveTile(ZoomifyImageCrop($imageRow, $ul_x, $ul_y, $lr_x, $lr_y), $tier, $column, $row);
         $this->numberOfTiles++;
         if ($this->_debug) {
           print "created tile: numberOfTiles= $this->numberOfTiles tier column row =($tier,$column,$row)<br>\n";
@@ -434,7 +434,7 @@ class ZoomifyFileProcessor {
         $lr_y = $this->originalHeight;
       }
       #			print "line 309 calling crop<br>";
-      $imageRow = imageCrop($image, 0, $ul_y, $this->originalWidth, $lr_y);
+      $imageRow = ZoomifyImageCrop($image, 0, $ul_y, $this->originalWidth, $lr_y);
       #		imageRow = image.crop([0, ul_y, $this->originalWidth, lr_y])
       $saveFilename = $root . $tier . "-" . $row .  $ext;
       if ($this->_debug) {

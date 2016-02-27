@@ -305,7 +305,7 @@ function zoomify_node_update($node) {
  */
 function zoomify_check_content_type($type) {
   $types = variable_get('zoomify_types', array());
-  if (in_array($type, $types)) {
+  if (in_array($type, array_filter($types))) {
     return TRUE;
   }
   return FALSE;
@@ -389,7 +389,7 @@ EOS;
   else { // ZOOMIFY_FRONTEND_HTML5
     // Need the zSkinPath parameter always.
     if (strpos($flashVars, 'zSkinPath') === FALSE) {
-      $skinPath = 'zSkinPath=' . libraries_get_path('zoomify', TRUE) . '/Assets/Skins/Dark';
+      $skinPath = 'zSkinPath=' . libraries_get_path('zoomify', TRUE) . '/Assets/Skins/Default';
       if (!empty($flashVars)) {
         $flashVars = $skinPath . '&' . $flashVars;
       }
